@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h2>Manage Products</h2>
+            <button class="add-btn" onclick="openModal()">+ Add Product</button>
+        </header>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Description</th>  <!-- Added Description Column -->
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="productTable">
+                <!-- Products will be added dynamically here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Add Product</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <input type="text" id="productName" placeholder="Product Name" required>
+                <textarea style="width: 90%;" id="productDescription" placeholder="Product Description" required></textarea>  <!-- New Description Field -->
+                <input type="number" step="0.01" id="productPrice" placeholder="Price" required>
+                <input type="file" id="productImage" accept="image/*" multiple required> 
+                <button type="submit">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

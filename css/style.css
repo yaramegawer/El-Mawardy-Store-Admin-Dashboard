@@ -1,0 +1,211 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    background-color: #f4f4f4;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 0;
+    padding: 20px;
+    width: 100%;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #38d39f;
+    color: white;
+    padding: 15px 50px;
+    border-radius: 8px;
+    font-size: larger;
+}
+
+/* Add Button */
+.add-btn {
+    background: #064823;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: large;
+    margin-right: 20px;
+    transition: background 0.3s ease;
+}
+
+.add-btn:hover {
+    background: #219150;
+}
+
+/* Search Bar */
+.search-bar {
+    margin: 20px 0;
+}
+
+.search-bar input {
+    width: 99%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Product Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+#productTable td {
+    padding: 20px;
+    text-align: center;
+}
+
+#productTable td:first-child {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding-left: 50px;
+}
+
+#productTable td:first-child img {
+    width: 50px;
+    height: auto;
+    display: inline-block;
+    
+}
+
+#productTable th {
+    background: #38d39f;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+#productTable tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Action Buttons */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.actions button {
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+.edit-btn {
+    background: #ffb217;
+    font-size: medium;
+    width: 80px;
+    color: white;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    font-size: medium;
+    width: 80px;
+}
+
+.edit-btn:hover {
+    background: #e0a800;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.modal-content button {
+    background: #27AE60;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+.modal-content button:hover {
+    background: #219150;
+}
+
+.close {
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+
+    #productTable td {
+        padding: 10px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}

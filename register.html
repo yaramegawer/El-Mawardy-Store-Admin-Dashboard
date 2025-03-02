@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="css/register.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+
+<body>
+    <img src="img/wave2.png" alt="bg_image" class="wave">
+
+    <div class="container">
+        <div class="login-content">
+            <form id="registerForm"> 
+                <img class="avatar" src="img/avatar.svg" alt="avatar">
+                <h2 class="title">Sign Up</h2>
+            
+                <div class="input-div one">
+                    <div class="i"><i class="fas fa-user"></i></div>
+                    <div class="div">
+                        <h5>Username</h5>
+                        <input type="text" class="input" name="userName" id="userName" required>
+                    </div>
+                </div>
+            
+                <div class="input-div one">
+                    <div class="i"><i class="fas fa-at"></i></div>
+                    <div class="div">
+                        <h5>Email</h5>
+                        <input type="email" class="input" name="email" id="email" required>
+                    </div>
+                </div>
+            
+                <div class="input-div two">
+                    <div class="i"><i class="fas fa-lock"></i></div>
+                    <div class="div">
+                        <h5>Password</h5>
+                        <input type="password" class="input" name="password" id="password" required>
+                    </div>
+                </div>
+            
+                <div class="input-div two">
+                    <div class="i"><i class="fas fa-lock"></i></div>
+                    <div class="div">
+                        <h5>Confirm Password</h5>
+                        <input type="password" class="input" name="confirmPassword" id="confirmPassword" required>
+                    </div>
+                </div>
+            
+                <a href="index.html" class="new">Already a user?</a>
+                <input type="submit" class="btn" value="Sign Up">
+            </form>
+            
+            <p id="responseMessage" class="error-message"></p> <!-- Better error display -->
+        </div>
+        <div class="img">
+            <img src="img/bg2.svg" alt="bg">
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", async function (event) {
+    event.preventDefault(); 
+
+    let userName = document.getElementById("userName").value;
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    let confirmPassword = document.getElementById("confirmPassword").value;
+    let responseMessage = document.getElementById("responseMessage");
+
+    responseMessage.style.color = "red"; // Default error color
+
+    // Password validation check (must contain at least one uppercase letter)
+    if (!/^(?=.*[A-Z])[A-Za-z\d]{8,}$/.test(password)) {
+        responseMessage.innerHTML = "⚠️ Password must contain at least one uppercase letter.";
+        return;
+    }
+
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        responseMessage.innerHTML = "⚠️ Passwords do not match!";
+        return;
+    }
+
+    let userData = { userName, email, password, confirmPassword };
+
+    try {
+        let response = await fetch("https://el-mawardy-store.vercel.app/user/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData)
+        });
+
+        let result = await response.json();
+
+        if (response.ok) {
+            responseMessage.style.color = "green";
+            responseMessage.innerHTML = "✅ Registration successful! Redirecting...";
+            setTimeout(() => { window.location.href = "index.html"; }, 2000);
+        } else {
+            // Show backend errors in a formatted way
+            responseMessage.innerHTML = `<strong>⚠️ Please fix the following errors:</strong><br>`;
+            if (result.message) {
+                responseMessage.innerHTML += `<ul>`;
+                result.message.forEach(err => responseMessage.innerHTML += `<li>${err}</li>`);
+                responseMessage.innerHTML += `</ul>`;
+            } else {
+                responseMessage.innerHTML += result.message || "Unknown error occurred!";
+            }
+        }
+    } catch (error) {
+        responseMessage.innerHTML = "❌ An error occurred. Please try again!";
+    }
+});
+
+    </script>
+
+</body>
+</html>

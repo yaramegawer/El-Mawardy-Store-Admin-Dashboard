@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+</head>
+
+<body>
+    <img src="img/wave.png" alt="background image" class="wave">
+
+    <div class="container">
+        <div class="img">
+            <img src="img/bg.svg" alt="background">
+        </div>
+        <div class="login-content">
+            <form id="loginForm">
+                <img class="avatar" src="img/avatar.svg" alt="avatar">
+                <h2 class="title">Admin Login</h2>
+
+                <!-- Error/Success Message -->
+                <div id="responseMessage" class="message-box"></div>
+
+                <!-- Email Input -->
+                <div class="input-div one">
+                    <div class="i"><i class="fas fa-user"></i></div>
+                    <div class="div">
+                        <input type="email" class="input" id="email" placeholder="Email" required>
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div class="input-div two">
+                    <div class="i"><i class="fas fa-lock"></i></div>
+                    <div class="div">
+                        <input type="password" class="input" id="password" placeholder="Password" required>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div class="links">
+                    <a href="forgotPassword.html" class="new">Forgot Password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <input type="submit" class="btn" value="Login">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const responseMessage = document.getElementById("responseMessage");
+
+            responseMessage.innerHTML = ""; // Clear previous messages
+
+            try {
+                const response = await fetch("https://el-mawardy-store.vercel.app/user/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || "❌ Incorrect email or password.");
+                }
+
+                // Store the token
+                localStorage.setItem("authToken", data.token);
+
+                // Decode JWT to get user role
+                const tokenPayload = JSON.parse(atob(data.token.split(".")[1])); // Decode JWT
+                const userRole = tokenPayload.role;
+
+                responseMessage.style.color = "green";
+                responseMessage.innerHTML = "✅ Login successful! Redirecting...";
+
+                setTimeout(() => {
+                        window.location.href = "adminDashboard.html"; // Redirect admins
+                    }, 1500);
+
+                
+
+            } catch (error) {
+                responseMessage.style.color = "red";
+                responseMessage.innerHTML = `❌ ${error.message}`;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
